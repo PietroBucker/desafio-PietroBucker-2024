@@ -37,7 +37,9 @@ class RecintosZoo {
                             extra: recinto.animais.every(({ especie }) => especie !== animal)
                             && recinto.animais.length !== 0
                         };
-                    });;
+                    });
+                    console.log('recintoFiltrados', recintoFiltrados);
+                    
                 return {
                     erro: false,
                     recintosViaveis: this.geralista(recintoFiltrados, animal, quantidade)
@@ -67,6 +69,12 @@ class RecintosZoo {
             const recintoFiltrados = recintos
                 .filter((recinto) => this.verificaBioma(recinto, animal)
                     && recinto.animais.every(({ especie }) => especie === animal))
+            if (recintoFiltrados.length === 0) {
+                return {
+                    erro: "Não há recinto viável",
+                    recintosViaveis: false
+                };
+            }
             return {
                 erro: false,
                 recintosViaveis: this.geralista(recintoFiltrados, animal, quantidade)
@@ -119,13 +127,11 @@ class RecintosZoo {
     verificaEspacoDisponivel(recinto, animal, quantidade) {
         return animalInfo[animal].tamanho * quantidade + this.somaAnimaisExistentes(recinto) <= recinto.tamanhoTotal;
     }
-    espacoExtraOcupado(recinto, animal, quantidade) {
-        this.geralista(recinto, animal, quantidade);
-    }
 
 }
 
 export { RecintosZoo as RecintosZoo };
 
-// const testandoClasse = new RecintosZoo().analisaRecintos('LEAO', 1);
-// const testandoClasse2 = new RecintosZoo().analisaRecintos('CROCODILO', 1);
+
+console.log(new RecintosZoo().analisaRecintos('LEOPARDO', 1));
+
