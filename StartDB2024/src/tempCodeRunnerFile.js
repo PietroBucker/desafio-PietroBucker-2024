@@ -1,0 +1,1 @@
+   console.log('floresta'.includes(...['savana', 'floresta']));
