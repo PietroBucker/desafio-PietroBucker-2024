@@ -25,7 +25,8 @@ const zoo = {
             animais: [{
                 especie: "GAZELA",
                 quantidade: 1
-            }]
+            }
+        ]
         },
         {
             id: 4,
@@ -43,75 +44,30 @@ const zoo = {
             }]
         }
     ],
-    habilitados: [
-        {
-            especie: "MACACO",
-            recinto: [
-                "savana",
-                "floresta"
-            ],
-            tamanho: 1
-        },
-        {
-            especie: "LEAO",
-            recinto: [
-                "savana"
-            ],
-            tamanho: 3
-        },
-        {
-            especie: "GAZELA",
-            recinto: [
-                "savana"
-            ],
-            tamanho: 2
-        },
-        {
-            especie: "CROCODILO",
-            recinto: [
-                "rio"
-            ],
-            tamanho: 3
-        },
-        {
-            especie: "LOPARDO",
-            recinto: [
-                "savana"
-            ],
-            tamanho: 2,
-        },
-        {
-            especie: "HIPOPOTAMO",
-            recinto: [
-                "savana", "rio"
-            ],
-            tamanho: 4
-        }
-    ],
 
-    teste: {
+    animalInfo: {
         MACACO: {
-            bioma: ["savana", "floresta"],
+            bioma: ["savana", "floresta", "savana e rio"],
             tamanho: 1
         },
         LEAO: {
-            bioma: ["savana"],
+            bioma: ["savana", "savana e rio"],
             tamanho: 3
         },
         GAZELA: {
-            bioma: ["savana"],
+            bioma: ["savana", "savana e rio"],
             tamanho: 2
         },
         CROCODILO: {
-            bioma: ["rio"],
+            bioma: ["rio", "savana e rio"],
             tamanho: 3
         },
         LEOPARDO: {
-            bioma: ["savana"],
+            bioma: ["savana", "savana e rio"],
             tamanho: 2
         },
         HIPOPOTAMO: {
-            bioma: ["savana", "rio"],
+            bioma: ["savana", "rio", "savana e rio"],
             tamanho: 4
         }
     }

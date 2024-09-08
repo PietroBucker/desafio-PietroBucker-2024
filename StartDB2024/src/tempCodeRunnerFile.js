@@ -1,2 +1,1 @@
-
-            };
+recinto.animais.every(({ especie }) => especie !== animal)
