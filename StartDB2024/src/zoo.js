@@ -98,6 +98,22 @@ const zoo = {
             bioma: ["savana"],
             tamanho: 3
         },
+        GAZELA: {
+            bioma: ["savana"],
+            tamanho: 2
+        },
+        CROCODILO: {
+            bioma: ["rio"],
+            tamanho: 3
+        },
+        LEOPARDO: {
+            bioma: ["savana"],
+            tamanho: 2
+        },
+        HIPOPOTAMO: {
+            bioma: ["savana", "rio"],
+            tamanho: 4
+        }
     }
 };
 
