@@ -8,86 +8,85 @@ class RecintosZoo {
     // zoo = zoo;
     inicializaZoo = [
         new biomas.savana(10, [new especies.MACACO(3)]),
-        new biomas.savana(9, [new especies.LEAO(1)])
+        new biomas.floresta(7, []),
+        new biomas.savanaRio(7, [new especies.GAZELA(1)]),
+        new biomas.rio(8, []),
+        new biomas.savana(9, [new especies.LEAO(1)]),
+
+
     ];
     listaPermitidos = ['MACACO', 'LEAO', 'HIPOPOTAMO', 'GAZELA', 'LEOPARDO', 'CROCODILO'];
-    tamanhoAnimais = {
-        'MACACO': 1,
-        'LEAO': 3,
-        'HIPOPOTAMO': 4,
-        'GAZELA': 2,
-        'LEOPARDO': 2,
-        'CROCODILO': 3
-    };
+    biomaOrder = {
+        'savana': 1,
+        'floresta': 2,
+        'savana e rio': 3,
+        'rio': 4,
+        'savana2': 5
+    }
+
     biomasAnimais = {
-        'MACACO': ['savana', 'floresta'],
-        'LEAO': ['savana'],
-        'HIPOPOTAMO': ['savana', 'rio'],
-        'GAZELA': ['savana'],
-        'LEOPARDO': ['savana'],
-        'CROCODILO': ['rio']
+        'MACACO': ['savana', 'floresta', 'savana e rio'],
+        'LEAO': ['savana', 'savana e rio'],
+        'HIPOPOTAMO': ['savana', 'rio', 'savana e rio'],
+        'GAZELA': ['savana', 'savana e rio'],
+        'LEOPARDO': ['savana', 'savana e rio'],
+        'CROCODILO': ['rio', 'savana e rio']
     };
     analisaRecintos(animal, quantidade) {
         if (!this.listaPermitidos.includes(animal)) return {
             erro: "Animal inválido",
             recintosViaveis: false
         };
-        if (quantidade <= 0) return { 
-            erro: "Quantidade inválida", 
-            recintosViaveis: false };
+        if (quantidade <= 0) return {
+            erro: "Quantidade inválida",
+            recintosViaveis: false
+        };
 
         const novoAnimal = new especies[animal](quantidade);
 
         if (this.verificaEspacoDisponivel(novoAnimal)) return {
-             erro: "Não há recinto viável", 
-             recintosViaveis: false };
+            erro: "Não há recinto viável",
+            recintosViaveis: false
+        };
 
+        if (animal === 'MACACO') {
+            return {
+                erro: false,
+                recintosViaveis: this.inicializaZoo
+                    .filter((recinto) => recinto.nome === 'savana' || recinto.nome === 'floresta' || recinto.nome === 'savana e rio' && recinto.listaAnimal.length === 0)
+                    .map((recinto, ind) => {
+                    return `Recinto ${this.biomaOrder[recinto.nome]} (espaço livre: ${recinto.getEspacoTotal() - novoAnimal.getTamanho() * quantidade} total: ${recinto.getEspacoTotal()})`;
 
+                })
 
+            };
+        }
+        if (animal === 'CROCODILO') {
+            console.log(this.inicializaZoo.indexOf('rio'));
 
+            return {
+                erro: false,
+                recintosViaveis: this.inicializaZoo
+                    .filter((recinto) => recinto.nome === 'rio' || recinto.nome === 'savana e rio' && recinto.listaAnimal.length === 0)
+                    .map((recinto, ind) => {
+                    return `Recinto ${this.biomaOrder[recinto.nome]} (espaço livre: ${recinto.getEspacoTotal() - novoAnimal.getTamanho() * quantidade} total: ${recinto.getEspacoTotal()})`;
 
+                })
 
-        // const atual = this.dadosAtuais();
-        // console.log(atual);
-        // const filtro = atual.filter((recinto) => recinto.bioma);
-        // console.log(filtro);
+            };
+        }
 
-        // const filtro1 = filtro.filter((recinto) => this.biomasAnimais[animal].some((bioma) => recinto.bioma.includes(bioma)));
-        // const teste = atual.filter((recinto) => (recinto.total - recinto.livre + (quantidade * this.tamanhoAnimais[animal])) <= recinto.total);
-        // console.log(filtro1);
     }
+
     verificaEspacoDisponivel(novoAnimal) {
         return this.inicializaZoo
             .every((recinto) => recinto.getEspacoOcupado() + (novoAnimal.getTamanho() * novoAnimal.getQuantidade()) > recinto.getEspacoTotal());
     }
 
-    encontraBioma(animal) {
-        //filtro:
-        //bioma do anuima
-        //espaço suficiente
-        //se é carnivoro tem que estar com a mesma especie
-        //hipopotamo so fica confortavel em recinto com savana e rio
-        //macaco precisa de outra especie junto para ficar confortavel
-        //mais de uma especie no recinto considerar 1 espaço extra
-        //lotes de animais nao podem ser separados
-    }
-    // dadosAtuais() {
-
-    //     return this.zoo.recintos.filter(({ animais }) => animais.some(({ especie }) => especie !== ''))
-    //         .map((recinto) => {
-    //             return {
-    //                 bioma: recinto.bioma,
-    //                 total: recinto.tamanhoTotal,
-    //                 livre: recinto.tamanhoTotal - recinto.animais
-    //                     .reduce((acc, animal) => acc + this.tamanhoAnimais[animal.especie] * animal.quantidade, 0),
-    //             };
-    //         });
-
-    // }
 
 }
 
 export { RecintosZoo as RecintosZoo };
 
 // const testandoClasse = new RecintosZoo().analisaRecintos('LEAO', 1);
-const testandoClasse2 = new RecintosZoo().analisaRecintos('MACACO', 10);
+const testandoClasse2 = new RecintosZoo().analisaRecintos('CROCODILO', 1);

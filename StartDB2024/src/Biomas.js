@@ -1,8 +1,6 @@
 import { especies } from './Animais.js';
-
-class savana {
+class bioma {
     constructor(espaco, listaAnimal) {
-        this.nome = 'savana';
         this.espaco = espaco;
         this.listaAnimal = listaAnimal;
     }
@@ -23,7 +21,33 @@ class savana {
         return result;
     }
 }
+class savana extends bioma {
+   constructor(espaco, listaAnimal) {
+         super(espaco, listaAnimal);
+         this.nome = 'savana';
+    }
+}
 
+class floresta extends bioma {
+    constructor(espaco, listaAnimal) {
+          super(espaco, listaAnimal);
+          this.nome = 'floresta';
+     }
+ }
+
+ class savanaRio extends bioma {
+    constructor(espaco, listaAnimal) {
+          super(espaco, listaAnimal);
+          this.nome = 'savana e rio';
+     }
+ }
+
+ class rio extends bioma {
+    constructor(espaco, listaAnimal) {
+          super(espaco, listaAnimal);
+          this.nome = 'rio';
+     }
+ }
 const teste = new savana(9, [new especies.LEAO(1)]);
 // console.log(teste.getEspacoOcupado());
 
@@ -31,4 +55,8 @@ const teste = new savana(9, [new especies.LEAO(1)]);
 
 export const biomas = {
     savana,
+    floresta,
+    savanaRio,
+    rio,
+
 }
