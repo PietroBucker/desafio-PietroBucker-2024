@@ -1,1 +1,3 @@
-   console.log('floresta'.includes(...['savana', 'floresta']));
+}else{
+            console.log('cabe');
+        }

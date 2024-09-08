@@ -2,8 +2,14 @@ import zoo from './zoo.js';
 import { especies } from './Animais.js';
 import { biomas } from './Biomas.js';
 
+
+
 class RecintosZoo {
-    zoo = zoo;
+    // zoo = zoo;
+    inicializaZoo = [
+        new biomas.savana(10, [new especies.MACACO(3)]),
+        new biomas.savana(9, [new especies.LEAO(1)])
+    ];
     listaPermitidos = ['MACACO', 'LEAO', 'HIPOPOTAMO', 'GAZELA', 'LEOPARDO', 'CROCODILO'];
     tamanhoAnimais = {
         'MACACO': 1,
@@ -22,27 +28,39 @@ class RecintosZoo {
         'CROCODILO': ['rio']
     };
     analisaRecintos(animal, quantidade) {
-        if (!this.listaPermitidos.includes(animal)) {
-            return { erro: "Animal inválido", recintosViaveis: false };
-        }
-        if (quantidade <= 0) {
-            return { erro: "Quantidade inválida", recintosViaveis: false };
-        }
+        if (!this.listaPermitidos.includes(animal)) return {
+            erro: "Animal inválido",
+            recintosViaveis: false
+        };
+        if (quantidade <= 0) return { 
+            erro: "Quantidade inválida", 
+            recintosViaveis: false };
 
-        const atual = this.dadosAtuais();
+        const novoAnimal = new especies[animal](quantidade);
+
+        if (this.verificaEspacoDisponivel(novoAnimal)) return {
+             erro: "Não há recinto viável", 
+             recintosViaveis: false };
+
+
+
+
+
+
+        // const atual = this.dadosAtuais();
         // console.log(atual);
-        const filtro = atual.filter((recinto) => recinto.bioma);
-        console.log(filtro);
+        // const filtro = atual.filter((recinto) => recinto.bioma);
+        // console.log(filtro);
 
         // const filtro1 = filtro.filter((recinto) => this.biomasAnimais[animal].some((bioma) => recinto.bioma.includes(bioma)));
         // const teste = atual.filter((recinto) => (recinto.total - recinto.livre + (quantidade * this.tamanhoAnimais[animal])) <= recinto.total);
         // console.log(filtro1);
-
-
-
-
-
     }
+    verificaEspacoDisponivel(novoAnimal) {
+        return this.inicializaZoo
+            .every((recinto) => recinto.getEspacoOcupado() + (novoAnimal.getTamanho() * novoAnimal.getQuantidade()) > recinto.getEspacoTotal());
+    }
+
     encontraBioma(animal) {
         //filtro:
         //bioma do anuima
@@ -53,25 +71,23 @@ class RecintosZoo {
         //mais de uma especie no recinto considerar 1 espaço extra
         //lotes de animais nao podem ser separados
     }
-    dadosAtuais() {
+    // dadosAtuais() {
 
-        return this.zoo.recintos.filter(({animais}) => animais.some(({especie}) => especie !== ''))
-        .map((recinto) => {
-            return {
-                bioma: recinto.bioma,
-                total: recinto.tamanhoTotal,
-                livre: recinto.tamanhoTotal - recinto.animais
-                    .reduce((acc, animal) => acc + this.tamanhoAnimais[animal.especie] * animal.quantidade, 0),
-            };
-        })
+    //     return this.zoo.recintos.filter(({ animais }) => animais.some(({ especie }) => especie !== ''))
+    //         .map((recinto) => {
+    //             return {
+    //                 bioma: recinto.bioma,
+    //                 total: recinto.tamanhoTotal,
+    //                 livre: recinto.tamanhoTotal - recinto.animais
+    //                     .reduce((acc, animal) => acc + this.tamanhoAnimais[animal.especie] * animal.quantidade, 0),
+    //             };
+    //         });
 
-    }
+    // }
 
 }
 
 export { RecintosZoo as RecintosZoo };
 
 // const testandoClasse = new RecintosZoo().analisaRecintos('LEAO', 1);
-new biomas.savana(10, [new especies.MACACO(3)])
-new biomas.savana(9, [new especies.LEAO(1)])
-const testandoClasse2 = new RecintosZoo().analisaRecintos('MACACO', 2);
+const testandoClasse2 = new RecintosZoo().analisaRecintos('MACACO', 10);
